@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -26,6 +26,61 @@
         },
       };
     </script>
+    <style>
+      :root {
+        --river-a: #fff6f1;
+        --river-b: #f6dbe4;
+        --river-c: #f3e9f0;
+        --river-d: #fbe7ef;
+      }
+
+      .river-flow {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .river-flow::before,
+      .river-flow::after {
+        content: "";
+        position: absolute;
+        inset: -40% -30%;
+        background:
+          radial-gradient(60% 60% at 30% 30%, rgba(217, 119, 139, 0.22), transparent 70%),
+          radial-gradient(55% 55% at 70% 40%, rgba(122, 47, 67, 0.18), transparent 72%),
+          radial-gradient(50% 50% at 50% 70%, rgba(217, 119, 139, 0.16), transparent 75%),
+          linear-gradient(120deg, var(--river-a), var(--river-b), var(--river-c), var(--river-d));
+        opacity: 0.32;
+        transform: translate3d(0, 0, 0) rotate(0.001deg);
+        animation: riverDrift 26s linear infinite;
+        pointer-events: none;
+      }
+
+      .river-flow::after {
+        inset: -60% -50%;
+        opacity: 0.2;
+        filter: blur(18px);
+        animation-duration: 40s;
+        animation-direction: reverse;
+      }
+
+      .card-flow {
+        will-change: transform;
+        transition: transform 80ms linear;
+      }
+
+      @keyframes riverDrift {
+        0% {
+          transform: translate3d(-6%, -2%, 0) scale(1.05);
+        }
+        50% {
+          transform: translate3d(4%, 2%, 0) scale(1.08);
+        }
+        100% {
+          transform: translate3d(-6%, -2%, 0) scale(1.05);
+        }
+      }
+
+    </style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-blush via-paper to-blush text-cocoa font-serifRomance">
     <main class="mx-auto flex min-h-screen w-full max-w-2xl flex-col px-4 py-8">
@@ -33,7 +88,7 @@
         <p class="text-xs uppercase tracking-[0.2em] text-rose/80">Valentine Journey</p>
         <h1 class="mt-2 text-3xl font-semibold text-wine">A Maze of Us</h1>
         <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cocoa/80">
-          Step through the little turns that brought us here — one room, one memory, one heartbeat at a time.
+          Step through the little turns that brought us here â€” one room, one memory, one heartbeat at a time.
         </p>
       </header>
 
@@ -45,7 +100,10 @@
         <div id="heartTrack" class="flex flex-wrap gap-1.5" aria-live="polite"></div>
       </section>
 
-      <section id="roomContainer" class="relative flex-1 overflow-hidden rounded-3xl border border-rose/20 bg-paper/90 p-5 shadow-card sm:p-8">
+      <section
+        id="roomContainer"
+        class="river-flow relative flex-1 overflow-hidden rounded-3xl border border-rose/20 bg-paper/90 p-5 shadow-card sm:p-8"
+      >
         <!-- Dynamic room content is injected here -->
       </section>
     </main>
@@ -79,7 +137,7 @@
           id: "train_platform",
           image: "images/03.jpg", // TODO: Replace with your real image path
           text:
-            "At the station, we learned distance can be measured in courage too — in every message, every wait, every reunion.", // TODO: Replace memory text
+            "At the station, we learned distance can be measured in courage too â€” in every message, every wait, every reunion.", // TODO: Replace memory text
           options: [{ label: "Find the next turn", next: "coastal_evening" }],
         },
         coastal_evening: {
@@ -96,19 +154,69 @@
           id: "final_heart",
           image: "images/05.jpg", // TODO: Replace with your real final image path
           text:
-            "At the center of every path, every detour, every season — it's you. Thank you for being my favorite direction.", // TODO: Replace final heartfelt text
+            "At the center of every path, every detour, every season â€” it's you. Thank you for being my favorite direction.", // TODO: Replace final heartfelt text
+          options: [{ label: "Take one more turn", next: "starlit_drive" }],
+        },
+        starlit_drive: {
+          id: "starlit_drive",
+          image: "images/06.jpg",
+          text:
+            "We chased city lights that night, laughing so much the windows fogged up and the world blurred into a glittering stream.",
+          options: [{ label: "Keep drifting", next: "garden_walk" }],
+        },
+        garden_walk: {
+          id: "garden_walk",
+          image: "images/07.jpg",
+          text:
+            "The garden held its breath as we held hands, petals brushing our sleeves like a quiet blessing.",
+          options: [
+            { label: "Follow the lanterns", next: "cozy_kitchen" },
+            { label: "Circle back", next: "coastal_evening" },
+          ],
+        },
+        cozy_kitchen: {
+          id: "cozy_kitchen",
+          image: "images/08.jpg",
+          text:
+            "Late-night snacks, gentle music, and the kind of comfort that feels like sunlight in a small room.",
+          options: [{ label: "Step outside", next: "city_lights" }],
+        },
+        city_lights: {
+          id: "city_lights",
+          image: "images/09.jpg",
+          text:
+            "We stood under a skyline and made tiny promises, letting the night hum around us like a lullaby.",
+          options: [{ label: "One last memory", next: "forever_note" }],
+        },
+        forever_note: {
+          id: "forever_note",
+          image: "images/10.jpg",
+          text:
+            "If our story is a river, then let it keep flowing â€” always back to you.",
           options: [{ label: "Start again from the beginning", next: "intro" }],
         },
       };
 
-      const orderedRoomIds = ["intro", "rainy_cafe", "train_platform", "coastal_evening", "final_heart"];
-      const visitedRooms = new Set();
+      const orderedRoomIds = [
+        "intro",
+        "rainy_cafe",
+        "train_platform",
+        "coastal_evening",
+        "final_heart",
+        "starlit_drive",
+        "garden_walk",
+        "cozy_kitchen",
+        "city_lights",
+        "forever_note",
+      ];
 
       const roomContainer = document.getElementById("roomContainer");
       const heartTrack = document.getElementById("heartTrack");
       const progressLabel = document.getElementById("progressLabel");
 
       let currentRoomId = "intro";
+
+      const navigationHistory = [];
 
       function getRotationClass(index) {
         const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2", "rotate-0"];
@@ -117,14 +225,14 @@
 
       function updateProgress() {
         const total = orderedRoomIds.length;
-        const done = visitedRooms.size;
-        progressLabel.textContent = `${done} / ${total}`;
+        const currentIndex = Math.max(orderedRoomIds.indexOf(currentRoomId), 0);
+        progressLabel.textContent = `${currentIndex + 1} / ${total}`;
 
         heartTrack.innerHTML = "";
-        orderedRoomIds.forEach((roomId) => {
+        orderedRoomIds.forEach((roomId, index) => {
           const heart = document.createElement("span");
           heart.className = "text-lg leading-none transition-all duration-300";
-          heart.textContent = visitedRooms.has(roomId) ? "❤" : "♡";
+          heart.textContent = index <= currentIndex ? "\u2665" : "\u2661";
           heart.setAttribute("aria-hidden", "true");
           heartTrack.appendChild(heart);
         });
@@ -146,12 +254,59 @@
 
         return wrapper;
       }
+      function createNavigationControls() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "mt-4 flex flex-wrap items-center justify-center gap-3";
+
+        const backButton = document.createElement("button");
+        backButton.type = "button";
+        backButton.textContent = "Go back";
+        backButton.disabled = navigationHistory.length === 0;
+        backButton.className =
+          "rounded-full border border-rose/30 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-wine transition duration-200 " +
+          (backButton.disabled
+            ? "cursor-not-allowed opacity-40"
+            : "hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40");
+        backButton.addEventListener("click", () => goBack());
+
+        const restartButton = document.createElement("button");
+        restartButton.type = "button";
+        restartButton.textContent = "Restart";
+        restartButton.className =
+          "rounded-full border border-rose/30 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-wine transition duration-200 hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40";
+        restartButton.addEventListener("click", () => restartJourney());
+
+        wrapper.appendChild(backButton);
+        wrapper.appendChild(restartButton);
+
+        return wrapper;
+      }
+
+      function navigate(nextRoomId, { skipHistory = false } = {}) {
+        if (!rooms[nextRoomId]) return;
+        if (!skipHistory && currentRoomId) {
+          navigationHistory.push(currentRoomId);
+        }
+        currentRoomId = nextRoomId;
+        renderRoom(currentRoomId);
+      }
+
+      function goBack() {
+        if (navigationHistory.length === 0) return;
+        const previousRoom = navigationHistory.pop();
+        currentRoomId = previousRoom;
+        renderRoom(previousRoom);
+      }
+
+      function restartJourney() {
+        navigationHistory.length = 0;
+        currentRoomId = "intro";
+        renderRoom(currentRoomId);
+      }
 
       function renderRoom(roomId) {
         const room = rooms[roomId];
         if (!room) return;
-
-        visitedRooms.add(roomId);
         updateProgress();
 
         const roomIndex = orderedRoomIds.indexOf(roomId);
@@ -162,7 +317,7 @@
           "absolute inset-0 flex h-full w-full translate-y-3 items-center justify-center opacity-0 transition-all duration-500";
 
         card.innerHTML = `
-          <div class="w-full max-w-xl">
+          <div class="card-flow w-full max-w-xl">
             <div class="mx-auto w-full max-w-md rounded-sm border border-stone-200 bg-white p-3 shadow-card ${rotationClass}">
               <figure class="rounded-sm bg-stone-100 p-2">
                 <img
@@ -187,6 +342,9 @@
         const optionsUI = createOptions(room.options);
         const contentWrap = card.firstElementChild;
         contentWrap.appendChild(optionsUI);
+        contentWrap.appendChild(createNavigationControls());
+
+        updateParallax();
 
         requestAnimationFrame(() => {
           card.classList.remove("translate-y-3", "opacity-0");
@@ -198,13 +356,39 @@
         }
       }
 
-      function navigate(nextRoomId) {
-        if (!rooms[nextRoomId]) return;
-        currentRoomId = nextRoomId;
-        renderRoom(currentRoomId);
+      let parallaxTicking = false;
+
+      function updateParallax() {
+        if (parallaxTicking) return;
+        parallaxTicking = true;
+
+        requestAnimationFrame(() => {
+          const card = roomContainer.querySelector(".card-flow");
+          if (!card) {
+            parallaxTicking = false;
+            return;
+          }
+
+          const rect = roomContainer.getBoundingClientRect();
+          const viewport = window.innerHeight || document.documentElement.clientHeight;
+          const progress = Math.min(Math.max((viewport - rect.top) / (viewport + rect.height), 0), 1);
+          const shift = (progress - 0.5) * 24;
+          card.style.transform = `translateY(${shift.toFixed(2)}px)`;
+
+          parallaxTicking = false;
+        });
       }
 
+      window.addEventListener("scroll", updateParallax, { passive: true });
+      window.addEventListener("resize", updateParallax);
+
       renderRoom(currentRoomId);
+      updateParallax();
     </script>
   </body>
 </html>
+
+
+
+
+
