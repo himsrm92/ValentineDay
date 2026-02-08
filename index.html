@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Valentine Maze</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              blush: "#f9e6e8",
+              rose: "#d9778b",
+              wine: "#7a2f43",
+              paper: "#fffaf3",
+              cocoa: "#5a3b3b",
+            },
+            boxShadow: {
+              card: "0 10px 25px rgba(122, 47, 67, 0.12)",
+            },
+            fontFamily: {
+              serifRomance: ["Georgia", "Cambria", "Times New Roman", "Times", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-blush via-paper to-blush text-cocoa font-serifRomance">
+    <main class="mx-auto flex min-h-screen w-full max-w-2xl flex-col px-4 py-8">
+      <header class="mb-6 text-center">
+        <p class="text-xs uppercase tracking-[0.2em] text-rose/80">Valentine Journey</p>
+        <h1 class="mt-2 text-3xl font-semibold text-wine">A Maze of Us</h1>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cocoa/80">
+          Step through the little turns that brought us here — one room, one memory, one heartbeat at a time.
+        </p>
+      </header>
+
+      <section class="mb-5 rounded-2xl border border-rose/20 bg-white/60 p-4 shadow-card backdrop-blur-sm">
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-sm font-medium text-wine">Journey Progress</span>
+          <span id="progressLabel" class="text-sm text-cocoa/80">0 / 0</span>
+        </div>
+        <div id="heartTrack" class="flex flex-wrap gap-1.5" aria-live="polite"></div>
+      </section>
+
+      <section id="roomContainer" class="relative flex-1 overflow-hidden rounded-3xl border border-rose/20 bg-paper/90 p-5 shadow-card sm:p-8">
+        <!-- Dynamic room content is injected here -->
+      </section>
+    </main>
+
+    <script>
+      // ===========================================
+      // REPLACE THIS DATA WITH YOUR OWN STORY:
+      // - image: swap to your real images in /images
+      // - text: replace with your actual memory text
+      // - options: adjust labels and route choices
+      // ===========================================
+      const rooms = {
+        intro: {
+          id: "intro",
+          image: "images/01.jpg", // TODO: Replace with your real intro image path
+          text:
+            "Every maze has a center. Ours started with a quiet hello, then turned into a hundred small moments that felt like home.", // TODO: Replace intro story text
+          options: [{ label: "Begin our walk", next: "rainy_cafe" }],
+        },
+        rainy_cafe: {
+          id: "rainy_cafe",
+          image: "images/02.jpg", // TODO: Replace with your real image path
+          text:
+            "A rainy afternoon, warm cups in our hands, and the first conversation that made time feel softer.", // TODO: Replace memory text
+          options: [
+            { label: "Keep talking", next: "train_platform" },
+            { label: "Take the scenic route", next: "coastal_evening" },
+          ],
+        },
+        train_platform: {
+          id: "train_platform",
+          image: "images/03.jpg", // TODO: Replace with your real image path
+          text:
+            "At the station, we learned distance can be measured in courage too — in every message, every wait, every reunion.", // TODO: Replace memory text
+          options: [{ label: "Find the next turn", next: "coastal_evening" }],
+        },
+        coastal_evening: {
+          id: "coastal_evening",
+          image: "images/04.jpg", // TODO: Replace with your real image path
+          text:
+            "The sea, the sunset, and that calm certainty: with you, even silence feels full.", // TODO: Replace memory text
+          options: [
+            { label: "Step toward the center", next: "final_heart" },
+            { label: "Relive the rainy day", next: "rainy_cafe" },
+          ],
+        },
+        final_heart: {
+          id: "final_heart",
+          image: "images/05.jpg", // TODO: Replace with your real final image path
+          text:
+            "At the center of every path, every detour, every season — it's you. Thank you for being my favorite direction.", // TODO: Replace final heartfelt text
+          options: [{ label: "Start again from the beginning", next: "intro" }],
+        },
+      };
+
+      const orderedRoomIds = ["intro", "rainy_cafe", "train_platform", "coastal_evening", "final_heart"];
+      const visitedRooms = new Set();
+
+      const roomContainer = document.getElementById("roomContainer");
+      const heartTrack = document.getElementById("heartTrack");
+      const progressLabel = document.getElementById("progressLabel");
+
+      let currentRoomId = "intro";
+
+      function getRotationClass(index) {
+        const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2", "rotate-0"];
+        return rotations[index % rotations.length];
+      }
+
+      function updateProgress() {
+        const total = orderedRoomIds.length;
+        const done = visitedRooms.size;
+        progressLabel.textContent = `${done} / ${total}`;
+
+        heartTrack.innerHTML = "";
+        orderedRoomIds.forEach((roomId) => {
+          const heart = document.createElement("span");
+          heart.className = "text-lg leading-none transition-all duration-300";
+          heart.textContent = visitedRooms.has(roomId) ? "❤" : "♡";
+          heart.setAttribute("aria-hidden", "true");
+          heartTrack.appendChild(heart);
+        });
+      }
+
+      function createOptions(options) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "mt-6 grid gap-3 sm:grid-cols-2";
+
+        options.forEach((option) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className =
+            "w-full rounded-xl border border-rose/30 bg-white/75 px-4 py-3 text-sm font-medium text-wine shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40";
+          button.textContent = option.label;
+          button.addEventListener("click", () => navigate(option.next));
+          wrapper.appendChild(button);
+        });
+
+        return wrapper;
+      }
+
+      function renderRoom(roomId) {
+        const room = rooms[roomId];
+        if (!room) return;
+
+        visitedRooms.add(roomId);
+        updateProgress();
+
+        const roomIndex = orderedRoomIds.indexOf(roomId);
+        const rotationClass = getRotationClass(roomIndex < 0 ? 0 : roomIndex);
+
+        const card = document.createElement("article");
+        card.className =
+          "absolute inset-0 flex h-full w-full translate-y-3 items-center justify-center opacity-0 transition-all duration-500";
+
+        card.innerHTML = `
+          <div class="w-full max-w-xl">
+            <div class="mx-auto w-full max-w-md rounded-sm border border-stone-200 bg-white p-3 shadow-card ${rotationClass}">
+              <figure class="rounded-sm bg-stone-100 p-2">
+                <img
+                  src="${room.image}"
+                  alt="Memory from our journey"
+                  class="h-56 w-full rounded-sm object-cover sm:h-64"
+                />
+                <figcaption class="pt-3 text-center text-xs uppercase tracking-[0.16em] text-cocoa/60">
+                  Memory ${Math.max(roomIndex + 1, 1)}
+                </figcaption>
+              </figure>
+            </div>
+            <p class="mx-auto mt-6 max-w-lg text-center text-base leading-relaxed text-cocoa sm:text-lg">
+              ${room.text}
+            </p>
+          </div>
+        `;
+
+        const oldCard = roomContainer.querySelector("article");
+        roomContainer.appendChild(card);
+
+        const optionsUI = createOptions(room.options);
+        const contentWrap = card.firstElementChild;
+        contentWrap.appendChild(optionsUI);
+
+        requestAnimationFrame(() => {
+          card.classList.remove("translate-y-3", "opacity-0");
+        });
+
+        if (oldCard) {
+          oldCard.classList.add("-translate-x-4", "opacity-0");
+          setTimeout(() => oldCard.remove(), 420);
+        }
+      }
+
+      function navigate(nextRoomId) {
+        if (!rooms[nextRoomId]) return;
+        currentRoomId = nextRoomId;
+        renderRoom(currentRoomId);
+      }
+
+      renderRoom(currentRoomId);
+    </script>
+  </body>
+</html>
