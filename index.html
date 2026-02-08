@@ -51,6 +51,7 @@
           linear-gradient(120deg, var(--river-a), var(--river-b), var(--river-c), var(--river-d));
         opacity: 0.32;
         transform: translate3d(0, 0, 0) rotate(0.001deg);
+        background-position: center calc(50% + var(--river-scroll, 0px));
         animation: riverDrift 26s linear infinite;
         pointer-events: none;
       }
@@ -83,7 +84,7 @@
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-blush via-paper to-blush text-cocoa font-serifRomance">
-    <main class="mx-auto flex min-h-screen w-full max-w-2xl flex-col px-4 py-8">
+      <main class="mx-auto min-h-[120vh] w-full max-w-2xl px-4 py-8">
       <header class="mb-6 text-center">
         <p class="text-xs uppercase tracking-[0.2em] text-rose/80">Valentine Journey</p>
         <h1 class="mt-2 text-3xl font-semibold text-wine">A Maze of Us</h1>
@@ -102,7 +103,7 @@
 
       <section
         id="roomContainer"
-        class="river-flow relative flex-1 overflow-hidden rounded-3xl border border-rose/20 bg-paper/90 p-5 shadow-card sm:p-8"
+        class="river-flow relative min-h-[70vh] overflow-visible rounded-3xl border border-rose/20 bg-paper/90 p-5 pb-12 shadow-card sm:p-8"
       >
         <!-- Dynamic room content is injected here -->
       </section>
@@ -369,11 +370,15 @@
             return;
           }
 
-          const rect = roomContainer.getBoundingClientRect();
+          const rect = card.getBoundingClientRect();
           const viewport = window.innerHeight || document.documentElement.clientHeight;
-          const progress = Math.min(Math.max((viewport - rect.top) / (viewport + rect.height), 0), 1);
-          const shift = (progress - 0.5) * 24;
-          card.style.transform = `translateY(${shift.toFixed(2)}px)`;
+          const distance = rect.top + rect.height / 2 - viewport / 2;
+          const ratio = Math.max(Math.min(distance / viewport, 1), -1);
+          const shift = ratio * 18;
+          const scale = 1 - Math.abs(ratio) * 0.03;
+          card.style.transform = `translateY(${shift.toFixed(2)}px) scale(${scale.toFixed(3)})`;
+          const riverShift = (-shift * 0.6).toFixed(2);
+          roomContainer.style.setProperty("--river-scroll", `${riverShift}px`);
 
           parallaxTicking = false;
         });
