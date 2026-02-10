@@ -1,399 +1,956 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Our Valentine Maze</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              blush: "#f9e6e8",
-              rose: "#d9778b",
-              wine: "#7a2f43",
-              paper: "#fffaf3",
-              cocoa: "#5a3b3b",
-            },
-            boxShadow: {
-              card: "0 10px 25px rgba(122, 47, 67, 0.12)",
-            },
-            fontFamily: {
-              serifRomance: ["Georgia", "Cambria", "Times New Roman", "Times", "serif"],
-            },
-          },
-        },
-      };
-    </script>
+    <title>Our Journey Through Time - Valentine's 2025</title>
     <style>
-      :root {
-        --river-a: #fff6f1;
-        --river-b: #f6dbe4;
-        --river-c: #f3e9f0;
-        --river-d: #fbe7ef;   
-      }
-
-      .river-flow {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .river-flow::before,
-      .river-flow::after {
-        content: "";
-        position: absolute;
-        inset: -40% -30%;
-        background:
-          radial-gradient(60% 60% at 30% 30%, rgba(217, 119, 139, 0.22), transparent 70%),
-          radial-gradient(55% 55% at 70% 40%, rgba(122, 47, 67, 0.18), transparent 72%),
-          radial-gradient(50% 50% at 50% 70%, rgba(217, 119, 139, 0.16), transparent 75%),
-          linear-gradient(120deg, var(--river-a), var(--river-b), var(--river-c), var(--river-d));
-        opacity: 0.32;
-        transform: translate3d(0, 0, 0) rotate(0.001deg);
-        background-position: center calc(50% + var(--river-scroll, 0px));
-        animation: riverDrift 26s linear infinite;
-        pointer-events: none;
-      }
-
-      .river-flow::after {
-        inset: -60% -50%;
-        opacity: 0.2;
-        filter: blur(18px);
-        animation-duration: 40s;
-        animation-direction: reverse;
-      }
-
-      .card-flow {
-        will-change: transform;
-        transition: transform 80ms linear;
-      }
-
-      @keyframes riverDrift {
-        0% {
-          transform: translate3d(-6%, -2%, 0) scale(1.05);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        50% {
-          transform: translate3d(4%, 2%, 0) scale(1.08);
-        }
-        100% {
-          transform: translate3d(-6%, -2%, 0) scale(1.05);
-        }
-      }
 
+        :root {
+            --rose: #d9778b;
+            --wine: #7a2f43;
+            --lavender: #c8b6e2;
+            --sky: #a8d8ea;
+            --peach: #ffd7ba;
+            --cream: #fff9f0;
+            --gold: #ffd700;
+            --white: #ffffff;
+            --text-dark: #2c1810;
+        }
+
+        body {
+            font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--peach) 0%, var(--cream) 50%, var(--sky) 100%);
+            color: var(--text-dark);
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--rose);
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--wine);
+            box-shadow: 0 4px 15px rgba(217, 119, 139, 0.3);
+        }
+
+        .music-control:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(217, 119, 139, 0.4);
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, 
+                var(--wine) 0%, 
+                var(--rose) 25%, 
+                var(--lavender) 50%, 
+                var(--sky) 75%, 
+                var(--wine) 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            transform: scale(1.2);
+            pointer-events: none;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .welcome-content {
+            text-align: center;
+            padding: 40px;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .start-button {
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 3px solid white;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: inherit;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .start-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Journey Container */
+        .journey-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: linear-gradient(180deg, 
+                #ffd7ba 0%,
+                #fff9f0 20%,
+                #a8d8ea 40%,
+                #c8b6e2 60%,
+                #fff9f0 80%,
+                #ffd7ba 100%);
+            background-size: 100% 200%;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+        
+        @keyframes backgroundFloat {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+        }
+        
+        /* Add light sparkles */
+        .animated-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(217, 119, 139, 0.2) 20%,
+                rgba(200, 182, 226, 0.2) 50%,
+                rgba(168, 216, 234, 0.2) 80%,
+                transparent 100%);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(217, 119, 139, 0.2);
+            animation: lightPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes lightPulse {
+            0%, 100% {
+                opacity: 0.3;
+                box-shadow: 0 0 20px rgba(217, 119, 139, 0.2);
+            }
+            50% {
+                opacity: 0.6;
+                box-shadow: 0 0 40px rgba(217, 119, 139, 0.4);
+            }
+        }
+
+        /* Particle System */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--rose);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: particleFloat 10s infinite ease-in-out;
+            opacity: 0.4;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate3d(var(--tx), var(--ty), 0) scale(1.5);
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.4;
+            }
+        }
+
+        /* Tunnel/Flow Path */
+        .flow-path {
+            position: relative;
+            width: 100%;
+            padding: 100vh 0;
+            z-index: 3;
+        }
+
+        /* Memory Station */
+        .memory-station {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+            transform-style: preserve-3d;
+        }
+        
+        /* Add background image to each station */
+        .memory-station::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+            filter: blur(2px);
+        }
+        
+        /* Individual backgrounds for each memory */
+        .memory-station[data-memory-id="1"]::before {
+            background-image: url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74');
+        }
+        
+        .memory-station[data-memory-id="2"]::before {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+        }
+        
+        .memory-station[data-memory-id="3"]::before {
+            background-image: url('https://images.unsplash.com/photo-1544155892-b2b6c64204fc');
+        }
+        
+        .memory-station[data-memory-id="4"]::before {
+            background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad');
+        }
+        
+        .memory-station[data-memory-id="5"]::before {
+            background-image: url('https://images.unsplash.com/photo-1719343113554-1a60f8764403');
+        }
+        
+        .memory-station[data-memory-id="6"]::before {
+            background-image: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9');
+        }
+        
+        .memory-station[data-memory-id="7"]::before {
+            background-image: url('https://images.unsplash.com/photo-1605649487212-47bdab064df7');
+        }
+        
+        .memory-station[data-memory-id="8"]::before {
+            background-image: url('https://images.unsplash.com/photo-1561359313-0639aad49ca6');
+        }
+        
+        .memory-station[data-memory-id="9"]::before {
+            background-image: url('https://images.unsplash.com/photo-1495296331652-02aafd80b5ba');
+        }
+        
+        .memory-station[data-memory-id="10"]::before {
+            background-image: url('https://images.unsplash.com/photo-1613685301918-59b1039422cc');
+        }
+        
+        /* Add flowing rings effect around stations */
+        .memory-station::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border: 2px solid rgba(217, 119, 139, 0.15);
+            border-radius: 50%;
+            animation: ringPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes ringPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .memory-card {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 60px;
+            border: 2px solid rgba(217, 119, 139, 0.3);
+            box-shadow: 
+                0 20px 60px rgba(217, 119, 139, 0.25),
+                inset 0 0 40px rgba(255, 255, 255, 0.5);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(150px) translateZ(-200px) rotateX(-20deg) scale(0.7);
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        .memory-card.visible {
+            opacity: 1;
+            transform: translateY(0) translateZ(0) rotateX(0deg) scale(1);
+        }
+
+        .memory-card:hover {
+            transform: translateY(-15px) translateZ(30px) rotateX(3deg) scale(1.03);
+            box-shadow: 
+                0 40px 100px rgba(217, 119, 139, 0.35),
+                inset 0 0 60px rgba(255, 255, 255, 0.6);
+            border-color: rgba(217, 119, 139, 0.5);
+        }
+        
+        @keyframes floatCard {
+            0%, 100% {
+                transform: translateY(0) translateZ(0) rotateX(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(-8px) translateZ(10px) rotateX(1deg) scale(1.01);
+            }
+        }
+
+        .memory-number {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--rose), var(--lavender));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(217, 119, 139, 0.5);
+            border: 3px solid white;
+        }
+
+        .image-portal {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 
+                0 20px 60px rgba(217, 119, 139, 0.3),
+                inset 0 0 30px rgba(255, 255, 255, 0.3);
+            transition: transform 0.5s ease;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .image-portal:hover {
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 
+                0 30px 80px rgba(217, 119, 139, 0.4),
+                inset 0 0 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .image-portal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .image-portal:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(217, 119, 139, 0.3) 0%, 
+                transparent 70%);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .memory-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--wine), var(--rose), var(--lavender));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .memory-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 0 20px;
+            background: rgba(255, 249, 240, 0.7);
+            border-radius: 20px;
+            padding: 25px 35px;
+            border: 1px solid rgba(217, 119, 139, 0.2);
+        }
+
+        /* Special Vrinda Final Station */
+        .vrinda-special {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.1) 0%,
+                rgba(217, 119, 139, 0.1) 50%,
+                rgba(200, 182, 226, 0.1) 100%);
+            border: 3px solid var(--gold);
+            box-shadow: 
+                0 30px 90px rgba(255, 215, 0, 0.4),
+                inset 0 0 60px rgba(255, 215, 0, 0.1);
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            top: -10%;
+            animation: confettiFall 5s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rose), var(--lavender), var(--sky), var(--gold));
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--rose);
+            transform: scale(1.5);
+            box-shadow: 0 0 20px var(--rose);
+        }
+
+        .nav-dot:hover {
+            background: var(--lavender);
+            transform: scale(1.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .memory-card {
+                padding: 40px 30px;
+            }
+            
+            .memory-title {
+                font-size: 2rem;
+            }
+            
+            .memory-text {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+            
+            .image-portal {
+                height: 300px;
+            }
+            
+            .nav-dots {
+                right: 15px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: var(--rose);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 10001;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
-  </head>
-  <body class="min-h-screen bg-gradient-to-b from-blush via-paper to-blush text-cocoa font-serifRomance">
-      <main class="mx-auto min-h-[120vh] w-full max-w-2xl px-4 py-8">
-      <header class="mb-6 text-center">
-        <p class="text-xs uppercase tracking-[0.2em] text-rose/80">Valentine Journey</p>
-        <h1 class="mt-2 text-3xl font-semibold text-wine">A Maze of Us</h1>
-        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cocoa/80">
-          Step through the little turns that brought us here â€” one room, one memory, one heartbeat at a time.
-        </p>
-      </header>
+</head>
+<body>
+    <!-- Music Control -->
+    <div class="music-control" onclick="toggleMusic()" data-testid="music-control">
+        <span id="musicIcon">🎵</span>
+        <span id="musicText">Play Music</span>
+    </div>
 
-      <section class="mb-5 rounded-2xl border border-rose/20 bg-white/60 p-4 shadow-card backdrop-blur-sm">
-        <div class="mb-2 flex items-center justify-between">
-          <span class="text-sm font-medium text-wine">Journey Progress</span>
-          <span id="progressLabel" class="text-sm text-cocoa/80">0 / 0</span>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots"></div>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">Our Journey Through Time</h1>
+            <p class="welcome-subtitle">A Valentine's Story of Love, Adventure & New Beginnings</p>
+            <button class="start-button" onclick="startJourney()" data-testid="start-journey-button">
+                Begin Our Journey ❤️
+            </button>
         </div>
-        <div id="heartTrack" class="flex flex-wrap gap-1.5" aria-live="polite"></div>
-      </section>
+    </div>
 
-      <section
-        id="roomContainer"
-        class="river-flow relative min-h-[70vh] overflow-visible rounded-3xl border border-rose/20 bg-paper/90 p-5 pb-12 shadow-card sm:p-8"
-      >
-        <!-- Dynamic room content is injected here -->
-      </section>
-    </main>
+    <!-- Journey Container -->
+    <div class="journey-container" id="journeyContainer" style="display: none;">
+        <!-- Animated Background -->
+        <div class="animated-background" id="animatedBg"></div>
+
+        <!-- Particle System -->
+        <div id="particleContainer"></div>
+
+        <!-- Flow Path -->
+        <div class="flow-path" id="flowPath">
+            <!-- Memory stations will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="music/background.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-      // ===========================================
-      // REPLACE THIS DATA WITH YOUR OWN STORY:
-      // - image: swap to your real images in /images
-      // - text: replace with your actual memory text
-      // - options: adjust labels and route choices
-      // ===========================================
-      const rooms = {
-        intro: {
-          id: "intro",
-          image: "images/01.jpg", // TODO: Replace with your real intro image path
-          text:
-            "Every maze has a center. Ours started with a quiet hello, then turned into a hundred small moments that felt like home.", // TODO: Replace intro story text
-          options: [{ label: "Begin our walk", next: "rainy_cafe" }],
-        },
-        rainy_cafe: {
-          id: "rainy_cafe",
-          image: "images/02.jpg", // TODO: Replace with your real image path
-          text:
-            "A rainy afternoon, warm cups in our hands, and the first conversation that made time feel softer.", // TODO: Replace memory text
-          options: [
-            { label: "Keep talking", next: "train_platform" },
-            { label: "Take the scenic route", next: "coastal_evening" },
-          ],
-        },
-        train_platform: {
-          id: "train_platform",
-          image: "images/03.jpg", // TODO: Replace with your real image path
-          text:
-            "At the station, we learned distance can be measured in courage too in every message, every wait, every reunion.", // TODO: Replace memory text
-          options: [{ label: "Find the next turn", next: "coastal_evening" }],
-        },
-        coastal_evening: {
-          id: "coastal_evening",
-          image: "images/04.jpg", // TODO: Replace with your real image path
-          text:
-            "The sea, the sunset, and that calm certainty: with you, even silence feels full.", // TODO: Replace memory text
-          options: [
-            { label: "Step toward the center", next: "final_heart" },
-            { label: "Relive the rainy day", next: "rainy_cafe" },
-          ],
-        },
-        final_heart: {
-          id: "final_heart",
-          image: "images/05.jpg", // TODO: Replace with your real final image path
-          text:
-            "At the center of every path, every detour, every season it's you. Thank you for being my favorite direction.", // TODO: Replace final heartfelt text
-          options: [{ label: "Take one more turn", next: "starlit_drive" }],
-        },
-        starlit_drive: {
-          id: "starlit_drive",
-          image: "images/06.jpg",
-          text:
-            "We chased city lights that night, laughing so much the windows fogged up and the world blurred into a glittering stream.",
-          options: [{ label: "Keep drifting", next: "garden_walk" }],
-        },
-        garden_walk: {
-          id: "garden_walk",
-          image: "images/07.jpg",
-          text:
-            "The garden held its breath as we held hands, petals brushing our sleeves like a quiet blessing.",
-          options: [
-            { label: "Follow the lanterns", next: "cozy_kitchen" },
-            { label: "Circle back", next: "coastal_evening" },
-          ],
-        },
-        cozy_kitchen: {
-          id: "cozy_kitchen",
-          image: "images/08.jpg",
-          text:
-            "Late-night snacks, gentle music, and the kind of comfort that feels like sunlight in a small room.",
-          options: [{ label: "Step outside", next: "city_lights" }],
-        },
-        city_lights: {
-          id: "city_lights",
-          image: "images/09.jpg",
-          text:
-            "We stood under a skyline and made tiny promises, letting the night hum around us like a lullaby.",
-          options: [{ label: "One last memory", next: "forever_note" }],
-        },
-        forever_note: {
-          id: "forever_note",
-          image: "images/10.jpg",
-          text:
-            "If our story is a river, then let it keep flowing always back to you.",
-          options: [{ label: "Start again from the beginning", next: "intro" }],
-        },
-      };
+        // Journey Data
+        const memories = [
+            {
+                id: 1,
+                title: "The Beginning - Our Wedding Day",
+                image: "images/01.jpg",
+                text: "Where two hearts became one, and our beautiful journey began. The day we promised forever, surrounded by love, joy, and dreams of all the adventures to come.",
+                color: "#d9778b"
+            },
+            {
+                id: 2,
+                title: "Goa - Sun, Sand & Soul",
+                image: "images/02.jpg",
+                text: "Our first adventure as partners. The waves whispered secrets, the sunsets painted our memories, and every moment was pure magic by the sea.",
+                color: "#a8d8ea"
+            },
+            {
+                id: 3,
+                title: "Birthday Celebration",
+                image: "images/03.jpg",
+                text: "Celebrating life, love, and laughter. A day filled with surprises, cake, and the warmth of having you by my side through another year of beautiful moments.",
+                color: "#c8b6e2"
+            },
+            {
+                id: 4,
+                title: "London - Harry Potter Magic",
+                image: "images/04.jpg",
+                text: "We stepped into a world of wizardry and wonder. Walking through Platform 9¾, living our childhood dreams together, creating our own magical story.",
+                color: "#7a2f43"
+            },
+            {
+                id: 5,
+                title: "Switzerland - Alpine Dreams",
+                image: "images/05.jpg",
+                text: "Mountains that touched the sky, snow that sparkled like diamonds, and moments that took our breath away. Paradise found in the Swiss Alps.",
+                color: "#a8d8ea"
+            },
+            {
+                id: 6,
+                title: "Venice - City of Romance",
+                image: "images/06.jpg",
+                text: "Floating through enchanting canals, past ancient bridges and timeless beauty. Every gondola ride, every narrow street, every moment felt like a scene from a dream.",
+                color: "#d9778b"
+            },
+            {
+                id: 7,
+                title: "Manali - Mountain Escape",
+                image: "images/07.jpg",
+                text: "Lost in the Himalayas, found in each other. Crisp mountain air, cozy moments, and the serenity of nature wrapping us in its peaceful embrace.",
+                color: "#c8b6e2"
+            },
+            {
+                id: 8,
+                title: "Banaras - Spiritual Journey",
+                image: "images/08.jpg",
+                text: "On the ghats of the holy Ganges, we found peace and perspective. Ancient traditions, glowing diyas, and a spiritual connection that transcended time.",
+                color: "#7a2f43"
+            },
+            {
+                id: 9,
+                title: "Andaman - Island Paradise",
+                image: "images/09.jpg",
+                text: "Crystal clear waters, pristine beaches, and endless horizons. We discovered paradise together, where time stood still and every moment felt eternal.",
+                color: "#a8d8ea"
+            },
+            {
+                id: 10,
+                title: "Vrinda - Our Little Miracle",
+                image: "images/10.jpg",
+                text: "Our greatest adventure yet. The moment we met our daughter Vrinda, our world became complete. She fills every day with laughter, love, and infinite joy. This is where our beautiful story becomes even more magical. 💛👶",
+                color: "#ffd700",
+                special: true
+            }
+        ];
 
-      const orderedRoomIds = [
-        "intro",
-        "rainy_cafe",
-        "train_platform",
-        "coastal_evening",
-        "final_heart",
-        "starlit_drive",
-        "garden_walk",
-        "cozy_kitchen",
-        "city_lights",
-        "forever_note",
-      ];
+        // Audio Control
+        let bgMusic = document.getElementById('bgMusic');
+        let musicPlaying = false;
 
-      const roomContainer = document.getElementById("roomContainer");
-      const heartTrack = document.getElementById("heartTrack");
-      const progressLabel = document.getElementById("progressLabel");
-
-      let currentRoomId = "intro";
-
-      const navigationHistory = [];
-
-      function getRotationClass(index) {
-        const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2", "rotate-0"];
-        return rotations[index % rotations.length];
-      }
-
-      function updateProgress() {
-        const total = orderedRoomIds.length;
-        const currentIndex = Math.max(orderedRoomIds.indexOf(currentRoomId), 0);
-        progressLabel.textContent = `${currentIndex + 1} / ${total}`;
-
-        heartTrack.innerHTML = "";
-        orderedRoomIds.forEach((roomId, index) => {
-          const heart = document.createElement("span");
-          heart.className = "text-lg leading-none transition-all duration-300";
-          heart.textContent = index <= currentIndex ? "\u2665" : "\u2661";
-          heart.setAttribute("aria-hidden", "true");
-          heartTrack.appendChild(heart);
-        });
-      }
-
-      function createOptions(options) {
-        const wrapper = document.createElement("div");
-        wrapper.className = "mt-6 grid gap-3 sm:grid-cols-2";
-
-        options.forEach((option) => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className =
-            "w-full rounded-xl border border-rose/30 bg-white/75 px-4 py-3 text-sm font-medium text-wine shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40";
-          button.textContent = option.label;
-          button.addEventListener("click", () => navigate(option.next));
-          wrapper.appendChild(button);
-        });
-
-        return wrapper;
-      }
-      function createNavigationControls() {
-        const wrapper = document.createElement("div");
-        wrapper.className = "mt-4 flex flex-wrap items-center justify-center gap-3";
-
-        const backButton = document.createElement("button");
-        backButton.type = "button";
-        backButton.textContent = "Go back";
-        backButton.disabled = navigationHistory.length === 0;
-        backButton.className =
-          "rounded-full border border-rose/30 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-wine transition duration-200 " +
-          (backButton.disabled
-            ? "cursor-not-allowed opacity-40"
-            : "hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40");
-        backButton.addEventListener("click", () => goBack());
-
-        const restartButton = document.createElement("button");
-        restartButton.type = "button";
-        restartButton.textContent = "Restart";
-        restartButton.className =
-          "rounded-full border border-rose/30 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-wine transition duration-200 hover:-translate-y-0.5 hover:bg-rose/10 focus:outline-none focus:ring-2 focus:ring-rose/40";
-        restartButton.addEventListener("click", () => restartJourney());
-
-        wrapper.appendChild(backButton);
-        wrapper.appendChild(restartButton);
-
-        return wrapper;
-      }
-
-      function navigate(nextRoomId, { skipHistory = false } = {}) {
-        if (!rooms[nextRoomId]) return;
-        if (!skipHistory && currentRoomId) {
-          navigationHistory.push(currentRoomId);
+        function toggleMusic() {
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+            
+            if (musicPlaying) {
+                bgMusic.pause();
+                icon.textContent = '🎵';
+                text.textContent = 'Play Music';
+                musicPlaying = false;
+            } else {
+                bgMusic.play().catch(e => {
+                    console.log('Music autoplay prevented:', e);
+                    // Show a gentle prompt if autoplay is blocked
+                    alert('Please enable audio to enjoy the full experience! 🎵');
+                });
+                icon.textContent = '🔊';
+                text.textContent = 'Pause Music';
+                musicPlaying = true;
+            }
         }
-        currentRoomId = nextRoomId;
-        renderRoom(currentRoomId);
-      }
 
-      function goBack() {
-        if (navigationHistory.length === 0) return;
-        const previousRoom = navigationHistory.pop();
-        currentRoomId = previousRoom;
-        renderRoom(previousRoom);
-      }
-
-      function restartJourney() {
-        navigationHistory.length = 0;
-        currentRoomId = "intro";
-        renderRoom(currentRoomId);
-      }
-
-      function renderRoom(roomId) {
-        const room = rooms[roomId];
-        if (!room) return;
-        updateProgress();
-
-        const roomIndex = orderedRoomIds.indexOf(roomId);
-        const rotationClass = getRotationClass(roomIndex < 0 ? 0 : roomIndex);
-
-        const card = document.createElement("article");
-        card.className =
-          "absolute inset-0 flex h-full w-full translate-y-3 items-center justify-center opacity-0 transition-all duration-500";
-
-        card.innerHTML = `
-          <div class="card-flow w-full max-w-xl">
-            <div class="mx-auto w-full max-w-md rounded-sm border border-stone-200 bg-white p-3 shadow-card ${rotationClass}">
-              <figure class="rounded-sm bg-stone-100 p-2">
-                <img
-                  src="${room.image}"
-                  alt="Memory from our journey"
-                  class="h-56 w-full rounded-sm object-cover sm:h-64"
-                />
-                <figcaption class="pt-3 text-center text-xs uppercase tracking-[0.16em] text-cocoa/60">
-                  Memory ${Math.max(roomIndex + 1, 1)}
-                </figcaption>
-              </figure>
-            </div>
-            <p class="mx-auto mt-6 max-w-lg text-center text-base leading-relaxed text-cocoa sm:text-lg">
-              ${room.text}
-            </p>
-          </div>
-        `;
-
-        const oldCard = roomContainer.querySelector("article");
-        roomContainer.appendChild(card);
-
-        const optionsUI = createOptions(room.options);
-        const contentWrap = card.firstElementChild;
-        contentWrap.appendChild(optionsUI);
-        contentWrap.appendChild(createNavigationControls());
-
-        updateParallax();
-
-        requestAnimationFrame(() => {
-          card.classList.remove("translate-y-3", "opacity-0");
-        });
-
-        if (oldCard) {
-          oldCard.classList.add("-translate-x-4", "opacity-0");
-          setTimeout(() => oldCard.remove(), 420);
+        // Start Journey
+        function startJourney() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const journeyContainer = document.getElementById('journeyContainer');
+            
+            welcomeScreen.classList.add('hidden');
+            journeyContainer.style.display = 'block';
+            
+            // Try to autoplay music
+            bgMusic.play().catch(e => {
+                console.log('Music autoplay prevented:', e);
+            });
+            musicPlaying = true;
+            document.getElementById('musicIcon').textContent = '🔊';
+            document.getElementById('musicText').textContent = 'Pause Music';
+            
+            initializeJourney();
         }
-      }
 
-      let parallaxTicking = false;
+        // Initialize Journey
+        function initializeJourney() {
+            createParticles();
+            createMemoryStations();
+            createNavigationDots();
+            setupScrollAnimation();
+        }
 
-      function updateParallax() {
-        if (parallaxTicking) return;
-        parallaxTicking = true;
+        // Create Particles
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            const particleCount = 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const randomX = Math.random() * 200 - 100;
+                const randomY = Math.random() * 200 - 100;
+                const randomDelay = Math.random() * 10;
+                const randomDuration = 8 + Math.random() * 10;
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.setProperty('--tx', randomX + 'vw');
+                particle.style.setProperty('--ty', randomY + 'vh');
+                particle.style.animationDelay = randomDelay + 's';
+                particle.style.animationDuration = randomDuration + 's';
+                
+                container.appendChild(particle);
+            }
+        }
 
-        requestAnimationFrame(() => {
-          const card = roomContainer.querySelector(".card-flow");
-          if (!card) {
-            parallaxTicking = false;
-            return;
-          }
+        // Create Memory Stations
+        function createMemoryStations() {
+            const flowPath = document.getElementById('flowPath');
+            
+            memories.forEach((memory, index) => {
+                const station = document.createElement('div');
+                station.className = 'memory-station';
+                station.setAttribute('data-memory-id', memory.id);
+                station.setAttribute('data-testid', `memory-station-${memory.id}`);
+                
+                const isVrinda = memory.special;
+                
+                station.innerHTML = `
+                    <div class="memory-card ${isVrinda ? 'vrinda-special' : ''}" data-testid="memory-card-${memory.id}">
+                        <div class="memory-number">${memory.id}</div>
+                        
+                        ${isVrinda ? '<div class="confetti-container" id="confettiContainer"></div>' : ''}
+                        
+                        <div class="image-portal">
+                            <img src="${memory.image}" alt="${memory.title}" loading="lazy">
+                            <div class="image-glow"></div>
+                        </div>
+                        
+                        <h2 class="memory-title">${memory.title}</h2>
+                        <p class="memory-text">${memory.text}</p>
+                    </div>
+                `;
+                
+                flowPath.appendChild(station);
+            });
+            
+            // Add confetti for Vrinda
+            setTimeout(() => {
+                const confettiContainer = document.getElementById('confettiContainer');
+                if (confettiContainer) {
+                    createConfetti(confettiContainer);
+                }
+            }, 1000);
+        }
 
-          const rect = card.getBoundingClientRect();
-          const viewport = window.innerHeight || document.documentElement.clientHeight;
-          const distance = rect.top + rect.height / 2 - viewport / 2;
-          const ratio = Math.max(Math.min(distance / viewport, 1), -1);
-          const shift = ratio * 18;
-          const scale = 1 - Math.abs(ratio) * 0.03;
-          card.style.transform = `translateY(${shift.toFixed(2)}px) scale(${scale.toFixed(3)})`;
-          const riverShift = (-shift * 0.6).toFixed(2);
-          roomContainer.style.setProperty("--river-scroll", `${riverShift}px`);
+        // Create Confetti for Vrinda
+        function createConfetti(container) {
+            const colors = ['#ffd700', '#d9778b', '#c8b6e2', '#a8d8ea', '#ffffff'];
+            const confettiCount = 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
+                container.appendChild(confetti);
+            }
+        }
 
-          parallaxTicking = false;
+        // Create Navigation Dots
+        function createNavigationDots() {
+            const navDots = document.getElementById('navDots');
+            
+            memories.forEach((memory, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'nav-dot';
+                dot.setAttribute('data-memory-id', memory.id);
+                dot.setAttribute('data-testid', `nav-dot-${memory.id}`);
+                dot.setAttribute('title', memory.title);
+                
+                dot.addEventListener('click', () => {
+                    scrollToMemory(memory.id);
+                });
+                
+                navDots.appendChild(dot);
+            });
+        }
+
+        // Scroll to Memory
+        function scrollToMemory(memoryId) {
+            const station = document.querySelector(`[data-memory-id="${memoryId}"]`);
+            if (station) {
+                station.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Setup Scroll Animation
+        function setupScrollAnimation() {
+            const observerOptions = {
+                threshold: 0.3,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const card = entry.target.querySelector('.memory-card');
+                    if (entry.isIntersecting) {
+                        card.classList.add('visible');
+                        
+                        // Update active dot
+                        const memoryId = entry.target.getAttribute('data-memory-id');
+                        updateActiveDot(memoryId);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.memory-station').forEach(station => {
+                observer.observe(station);
+            });
+            
+            // Scroll progress
+            window.addEventListener('scroll', updateScrollProgress);
+        }
+
+        // Update Active Navigation Dot
+        function updateActiveDot(memoryId) {
+            document.querySelectorAll('.nav-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            const activeDot = document.querySelector(`.nav-dot[data-memory-id="${memoryId}"]`);
+            if (activeDot) {
+                activeDot.classList.add('active');
+            }
+        }
+
+        // Update Scroll Progress
+        function updateScrollProgress() {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight - windowHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / documentHeight) * 100;
+            
+            document.getElementById('scrollProgress').style.width = progress + '%';
+        }
+
+        // Smooth scroll behavior
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure smooth scrolling
+            document.documentElement.style.scrollBehavior = 'smooth';
         });
-      }
-
-      window.addEventListener("scroll", updateParallax, { passive: true });
-      window.addEventListener("resize", updateParallax);
-
-      renderRoom(currentRoomId);
-      updateParallax();
     </script>
-  </body>
+</body>
 </html>
-
-
-
-
-
